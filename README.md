@@ -4,4 +4,5 @@ checkers-game
 
 
 #How to use
-`./cmd.sh help`
+- First `source ./_ autocomplete` to enable `./_` command autocomplete in your terminal
+- `./_ help`

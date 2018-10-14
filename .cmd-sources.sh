@@ -1,7 +1,8 @@
 #!/bin/bash
 
 export MSYS_NO_PATHCONV=1 # needed for git bash on windows
-HELP='These are the commands supported:\n'
+COMMANDS=''
+HELP='These are the supported commands:\n'
 GENERAL_INFO=''
 H_COLOR='\e[1;36m'
 R_COLOR='\e[0m'
@@ -26,7 +27,8 @@ function fn_exists() {
 }
 
 function addHelp {
-	HELP=$HELP$1'\n\n'
+	COMMANDS=$COMMANDS" ${1}"
+	HELP=$HELP"$(highlight $1)\t$2\n\n"
 }
 
 function addGI {
@@ -34,5 +36,10 @@ function addGI {
 }
 
 function highlight {
-	echo $H_COLOR$1$R_COLOR
+	echo $H_COLOR$@$R_COLOR
+}
+
+addHelp autocomplete "Sets the autocomplete in your local instance of bash, usage: \n\t\t`pwd`$ $(highlight source $0 autocomplete)"
+function cmd_autocomplete {
+	complete -W "${COMMANDS}" _
 }

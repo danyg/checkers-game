@@ -3,39 +3,39 @@ source .cmd-sources.sh
 ###############################################################################
 # COMMANDS
 
-addHelp "$(highlight bash)\topens a bash command line to the docker container"
+addHelp bash "opens a bash command line to the docker container"
 function cmd_bash {
 	docker-compose $DOCKERC_FILES run --rm core /bin/bash
 }
 
-addHelp "$(highlight build)\trebuilds docker-compose services"
+addHelp build "rebuilds docker-compose services"
 function cmd_build {
 	docker-compose $DOCKERC_FILES build
 }
 
-addHelp "$(highlight up)\tstarts docker-compose services"
+addHelp up "starts docker-compose services"
 function cmd_up {
 	docker-compose $DOCKERC_FILES up
 }
 
-addHelp "$(highlight down)\tStops docker-compose services"
+addHelp down "Stops docker-compose services"
 function cmd_down {
 	docker-compose $DOCKERC_FILES down
 }
 
-addHelp "$(highlight test)\tRuns the tests"
+addHelp test "Runs the tests"
 function cmd_test {
 	setDevelEnv
 	docker-compose $DOCKERC_FILES run --rm core /bin/bash -c 'yarn test'
 }
 
-addHelp "$(highlight test:watch)\tRuns the tests"
+addHelp 'test:watch' "Runs the tests"
 function cmd_test:watch {
 	setDevelEnv
 	docker-compose $DOCKERC_FILES run --rm core /bin/bash -c 'yarn test:watch'
 }
 
-addHelp "$(highlight help)\tshows this help"
+addHelp help "shows this help"
 function cmd_help {
 	if [[ ! -z "$1" ]]; then
 		HELP=$1'\n\n'$HELP
