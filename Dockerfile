@@ -12,4 +12,5 @@ USER app
 WORKDIR $HOME/checkers-game
 RUN ls -la
 RUN yarn install
-RUN node ./core_opener.js
+RUN ls -la ./node_modules
+# RUN node ./core_opener.js

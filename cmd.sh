@@ -1,16 +1,25 @@
 #!/bin/bash
+source .cmd-sources.sh
 export MSYS_NO_PATHCONV=1 # needed for git bash on windows
 HELP='These are the commands supported:\n'
 GENERAL_INFO=''
 H_COLOR='\e[1;36m'
 R_COLOR='\e[0m'
-DOCKERC_FILES='-f ./docker-compose.yaml'
+DEFAULT_DOCKERC_FILES='-f ./docker-compose.yaml'
 
-case $ENV in
-	development|devel)
-		DOCKERC_FILES=$DOCKERC_FILES' -f ./docker-compose.devel.yaml'
-		;;
-esac
+function setDevelEnv {
+	DOCKERC_FILES=$DEFAULT_DOCKERC_FILES' -f ./docker-compose.devel.yaml'
+}
+
+function checkEnv {
+	case $ENV in
+		development|devel)
+			setDevelEnv
+			;;
+		*)
+			DOCKERC_FILES=$DEFAULT_DOCKERC_FILES
+	esac
+}
 
 function fn_exists() {
 	"$(type -t ${1})" = 'function'
@@ -51,7 +60,13 @@ function cmd_down {
 	docker-compose $DOCKERC_FILES down
 }
 
-addHelp "$(highlight help)\tshow this help"
+addHelp "$(highlight test)\tRuns the tests"
+function cmd_test {
+	setDevelEnv
+	docker-compose $DOCKERC_FILES run --rm core /bin/bash -c 'npm test'
+}
+
+addHelp "$(highlight help)\tshows this help"
 function cmd_help {
 	if [[ ! -z "$1" ]]; then
 		HELP=$1'\n\n'$HELP
@@ -61,6 +76,7 @@ function cmd_help {
 
 ###############################################################################
 # MAIN
+checkEnv
 addGI "$(highlight DOCKERC_FILES)=${DOCKERC_FILES}"
 
 echo -e $GENERAL_INFO
