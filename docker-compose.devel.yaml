@@ -1,0 +1,6 @@
+core:
+  build: .
+  command: 'node ./core_opener.js'
+  volumes:
+    - .:/home/app/checkers-game
+    - /home/app/checkers-game/node_modules
