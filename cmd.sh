@@ -26,7 +26,13 @@ function cmd_down {
 addHelp "$(highlight test)\tRuns the tests"
 function cmd_test {
 	setDevelEnv
-	docker-compose $DOCKERC_FILES run --rm core /bin/bash -c 'npm test'
+	docker-compose $DOCKERC_FILES run --rm core /bin/bash -c 'yarn test'
+}
+
+addHelp "$(highlight test:watch)\tRuns the tests"
+function cmd_test:watch {
+	setDevelEnv
+	docker-compose $DOCKERC_FILES run --rm core /bin/bash -c 'yarn test:watch'
 }
 
 addHelp "$(highlight help)\tshows this help"
