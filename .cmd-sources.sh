@@ -4,8 +4,8 @@ export MSYS_NO_PATHCONV=1 # needed for git bash on windows
 COMMANDS=''
 HELP='These are the supported commands:\n'
 GENERAL_INFO=''
-H_COLOR='\e[1;36m'
-R_COLOR='\e[0m'
+H_COLOR='\x1b[1;36m'
+R_COLOR='\x1b[0m'
 DEFAULT_DOCKERC_FILES='-f ./docker-compose.yaml'
 
 function setDevelEnv {
