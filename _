@@ -24,14 +24,18 @@ function cmd_down {
 }
 
 addHelp test "Runs the tests"
-function cmd_test {
+function cmd_pre_test {
 	setDevelEnv
+}
+function cmd_test {
 	docker-compose $DOCKERC_FILES run --rm core /bin/bash -c 'yarn test'
 }
 
 addHelp 'test:watch' "Runs the tests"
-function cmd_test:watch {
+function cmd_pre_test:watch {
 	setDevelEnv
+}
+function cmd_test:watch {
 	docker-compose $DOCKERC_FILES run --rm core /bin/bash -c 'yarn test:watch'
 }
 
@@ -46,10 +50,15 @@ function cmd_help {
 ###############################################################################
 # MAIN
 checkEnv
-addGI "$(highlight DOCKERC_FILES)=${DOCKERC_FILES}"
 
-echo -e $GENERAL_INFO
 if [ "$(type -t cmd_${1})" = 'function' ]; then
+
+	if [ "$(type -t cmd_pre_${1})" = 'function' ]; then
+		cmd_pre_${1} $2 $3 $4 $5 $6 $7 $8 $9
+	fi
+	addGI "$(highlight DOCKERC_FILES)=${DOCKERC_FILES}"
+	echo -e $GENERAL_INFO
+
 	cmd_${1} $2 $3 $4 $5 $6 $7 $8 $9
 else
 	if [ -z "$1" ]; then

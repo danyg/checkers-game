@@ -40,6 +40,9 @@ function highlight {
 }
 
 addHelp autocomplete "Sets the autocomplete in your local instance of bash, usage: \n\t\t`pwd`$ $(highlight source $0 autocomplete)"
+function cmd_pre_autocomplete {
+	GENERAL_INFO=''
+}
 function cmd_autocomplete {
 	complete -W "${COMMANDS}" _
 }
